@@ -7,6 +7,7 @@ const TriggerNode = fabric.util.createClass(Node, {
 		options = options || {};
 		options.fill = NODE_COLORS.TRIGGER.fill;
 		options.stroke = NODE_COLORS.TRIGGER.border;
+		console.log(options,'options')
 		this.callSuper('initialize', options);
 	},
 	_render(ctx) {

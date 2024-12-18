@@ -11,6 +11,7 @@ class AlignmentHandler {
 	 */
 	public left = () => {
 		const activeObject = this.handler.canvas.getActiveObject();
+		console.log(activeObject,'activeObject');
 		if (activeObject && activeObject.type === 'activeSelection') {
 			const activeSelection = activeObject as fabric.ActiveSelection;
 			const activeObjectLeft = -(activeObject.width / 2);

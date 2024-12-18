@@ -195,6 +195,142 @@ class DrawingHandler {
 		//     this.handler.canvas.renderAll();
 		// },
 	};
+	polyline= {
+		init:()=>{
+			this.handler.interactionHandler.drawing('polyline');
+			this.handler.pointArray = [];
+			this.handler.activeLine = null;
+			this.handler.lineArray = [];
+			this.handler.activeShape = null;
+		},
+		finish: () => {
+			this.handler.pointArray.forEach(point => {
+				this.handler.canvas.remove(point);
+			});
+			this.handler.canvas.remove(this.handler.activeLine);
+			this.handler.pointArray = [];
+			this.handler.activeLine = null;
+			this.handler.canvas.renderAll();
+			this.handler.interactionHandler.selection();
+		},
+		addPoint: (opt: FabricEvent) => {
+			console.log(opt,'opt')
+			const { e, absolutePointer } = opt;
+			const { x, y } = absolutePointer;
+			const circle = new fabric.Circle({
+				radius: 1,
+				fill: '#ffffff',
+				stroke: '#333333',
+				strokeWidth: 0.5,
+				left: x,
+				top: y,
+				selectable: false,
+				hasBorders: false,
+				hasControls: false,
+				originX: 'center',
+				originY: 'center',
+				hoverCursor: 'pointer',
+			}) as FabricObject<fabric.Circle>;
+			circle.set({
+				id: uuid(),
+			});
+			if (!this.handler.pointArray.length) {
+				circle.set({
+					fill: 'red',
+				});
+			}
+			const points = [x, y, x, y];
+			const line = new fabric.Line(points, {
+				strokeWidth: 1,
+				fill: '#999999',
+				stroke: '#999999',
+				originX: 'center',
+				originY: 'center',
+				selectable: false,
+				hasBorders: false,
+				hasControls: false,
+				evented: false,
+			}) as FabricObject<fabric.Line>;
+			line.set({
+				class: 'line',
+			});
+			console.log(this.handler.activeShape,this.handler,'activeShape')
+			if (this.handler.activeShape) {
+				const position = this.handler.canvas.getPointer(e);
+				const activeShapePoints = this.handler.activeShape.get('points') as Array<{ x: number; y: number }>;
+				activeShapePoints.push({
+					x: position.x,
+					y: position.y,
+				});
+				const polyline = new fabric.Polyline(activeShapePoints, {
+					stroke: '#333333',
+					strokeWidth: 1,
+					fill: 'transparent',
+					opacity: 0.1,
+					selectable: false,
+					hasBorders: false,
+					hasControls: false,
+					evented: false,
+				});
+				this.handler.canvas.remove(this.handler.activeShape);
+				this.handler.canvas.add(polyline);
+				this.handler.activeShape = polyline;
+				this.handler.canvas.renderAll();
+			} else {
+				const polyPoint = [{ x, y }];
+				const polyline = new fabric.Polyline(polyPoint, {
+					stroke: '#333333',
+					strokeWidth: 1,
+					fill: '#ransparent',
+					opacity: 0.1,
+					selectable: false,
+					hasBorders: false,
+					hasControls: false,
+					evented: false,
+				});
+				this.handler.activeShape = polyline;
+				this.handler.canvas.add(polyline);
+			}
+			this.handler.activeLine = line;
+			this.handler.pointArray.push(circle);
+			this.handler.lineArray.push(line);
+			this.handler.canvas.add(line);
+			this.handler.canvas.add(circle);
+		},
+		generate: (pointArray: FabricObject<fabric.Circle>[]) => {
+			console.log(pointArray,'pointArray')
+			const points = [] as any[];
+			const id = uuid();
+			pointArray.forEach(point => {
+				points.push({
+					x: point.left,
+					y: point.top,
+				});
+				this.handler.canvas.remove(point);
+			});
+			this.handler.lineArray.forEach(line => {
+				this.handler.canvas.remove(line);
+			});
+			this.handler.canvas.remove(this.handler.activeShape).remove(this.handler.activeLine);
+			const option = {
+				id,
+				points,
+				type: 'polyline',
+				stroke: 'rgba(0, 0, 0, 1)',
+				strokeWidth: 1,
+				fill: 'transparent',
+				opacity: 1,
+				objectCaching: !this.handler.editable,
+				name: 'New polyline',
+				superType: 'drawing',
+			};
+			this.handler.add(option, false);
+			this.handler.pointArray = [];
+			this.handler.activeLine = null;
+			this.handler.activeShape = null;
+			this.handler.interactionHandler.selection();
+		},
+	};
 
 	line = {
 		init: () => {

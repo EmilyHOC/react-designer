@@ -115,8 +115,10 @@ class ImageMapItems extends Component {
 				canvasRef.handler.drawingHandler.line.init();
 			} else if (item.option.type === 'arrow') {
 				canvasRef.handler.drawingHandler.arrow.init();
-			} else {
+			} else if(item.option.type=='polygon'){
 				canvasRef.handler.drawingHandler.polygon.init();
+			}else if(item.option.type=='polyline'){
+				canvasRef.handler.drawingHandler.polyline.init();
 			}
 		},
 		onChangeActiveKey: activeKey => {

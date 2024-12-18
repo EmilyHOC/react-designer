@@ -20,17 +20,25 @@ class CodeModal extends Component {
 		chartOption: this.props.value,
 		visible: false,
 	};
+	static getDerivedStateFromProps(nextProps, prevState) {
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		this.setState({
-			chartOption: nextProps.value,
-		});
+		console.log(nextProps,'nextProps')
+			return {
+				chartOption: nextProps.value,
+			};
 	}
+
+	// UNSAFE_componentWillReceiveProps(nextProps) {
+	// 	this.setState({
+	// 		chartOption: nextProps.value,
+	// 	});
+	// }
 
 	handlers = {
 		onOk: () => {
 			const { onChange } = this.props;
 			const { tempChartOption } = this.state;
+			console.log(tempChartOption,'tempChartOption');
 			onChange(tempChartOption);
 			this.setState({
 				visible: false,

@@ -62,7 +62,7 @@ class InternalCanvas extends Component<CanvasProps, IState> implements CanvasIns
 		this.canvas.renderAll();
 		this.container = this.containerRef.current;
 		this.handler = new Handler({
-			id,
+			id:id?id:uuid(),
 			width,
 			height,
 			editable,

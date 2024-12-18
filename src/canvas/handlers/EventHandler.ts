@@ -42,7 +42,7 @@ class EventHandler {
 				'mouse:up': this.mouseup,
 				'selection:cleared': this.selection,
 				'selection:created': this.selection,
-				'selection:updated': this.selection,
+				'selection:updated': this.selection
 			});
 		} else {
 			// @ts-ignore
@@ -62,6 +62,7 @@ class EventHandler {
 		if (this.handler.keyEvent.clipboard) {
 			document.addEventListener('paste', this.paste, false);
 		}
+		this.handler.canvas.wrapperEl.addEventListener('dblclick',this.mousedblclick,false)
 	}
 
 	/**
@@ -106,6 +107,7 @@ class EventHandler {
 		if (this.handler.keyEvent.clipboard) {
 			this.handler.canvas.wrapperEl.removeEventListener('paste', this.paste);
 		}
+		this.handler.canvas.wrapperEl.removeEventListener('dblclick', this.mousedblclick);
 	};
 
 	/**
@@ -132,8 +134,10 @@ class EventHandler {
 		 */
 		mousedblclick: (opt: FabricEvent) => {
 			const { target } = opt;
+			console.log('opt:mousedblclick',opt)
 			if (target) {
 				const { onDblClick } = this.handler;
+				console.log(onDblClick,'onDbCLick')
 				if (onDblClick) {
 					onDblClick(this.handler.canvas, target);
 				}
@@ -404,6 +408,7 @@ class EventHandler {
 				return;
 			}
 			if (this.handler.interactionMode === 'polygon') {
+				console.log(target.id)
 				if (target && this.handler.pointArray.length && target.id === this.handler.pointArray[0].id) {
 					this.handler.drawingHandler.polygon.generate(this.handler.pointArray);
 				} else {
@@ -421,7 +426,22 @@ class EventHandler {
 				} else {
 					this.handler.drawingHandler.arrow.addPoint(event);
 				}
+			}else if(this.handler.interactionMode === 'polyline'){
+				console.log(this.handler,'this.handler',target.id,)
+				if (target && this.handler.pointArray.length && target.id === this.handler.pointArray[0].id) {
+
+
+				} else {
+					this.handler.drawingHandler.polyline.addPoint(event);
+				}
 			}
+		}
+	};
+	public mousedblclick = (_e: MouseEvent) => {
+
+		// 多边形的时候双击结束
+		if(this.handler.interactionMode === 'polyline'&&this.handler.pointArray.length>=2){
+			this.handler.drawingHandler.polyline.generate(this.handler.pointArray);
 		}
 	};
 

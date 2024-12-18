@@ -64,6 +64,13 @@ const CanvasObject: CanvasObjectSchema = {
 				perPixelTargetFind: true,
 			}),
 	},
+	polyline: {
+		create: ({ points, ...option }: { points: any }) =>
+			new fabric.Polyline(points, {
+				...option,
+				perPixelTargetFind: true,
+			}),
+	},
 	line: {
 		create: ({ points, ...option }: { points: any }) => new Line(points, option),
 	},
@@ -72,8 +79,7 @@ const CanvasObject: CanvasObjectSchema = {
 	},
 	chart: {
 		create: (option: any) =>
-			new Chart(
-				option.chartOption || {
+			new Chart({
 					xAxis: {},
 					yAxis: {},
 					series: [
@@ -89,7 +95,45 @@ const CanvasObject: CanvasObjectSchema = {
 					],
 				},
 				option,
-			),
+			)
+	},
+	pieChart:{
+		create: (option:any) =>
+			new Chart({
+				title: {
+					text: '饼图',
+					subtext: 'Fake Data',
+					left: 'center'
+				},
+				tooltip: {
+					trigger: 'item'
+				},
+				legend: {
+					orient: 'vertical',
+					left: 'left'
+				},
+				series: [
+					{
+						name: 'Access From',
+						type: 'pie',
+						radius: '50%',
+						data: [
+							{ value: 1048, name: 'Search Engine' },
+							{ value: 735, name: 'Direct' },
+							{ value: 580, name: 'Email' },
+							{ value: 484, name: 'Union Ads' },
+							{ value: 300, name: 'Video Ads' }
+						],
+						emphasis: {
+							itemStyle: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}
+				]
+			},option)
 	},
 	element: {
 		create: ({ code, ...option }: { code: Code }) => new Element(code, option),

@@ -258,6 +258,40 @@ export default {
 			component: UserProperty,
 		},
 	},
+	polyline: {
+		general: {
+			title: 'General',
+			component: GeneralProperty,
+		},
+		link: {
+			title: 'Link',
+			component: LinkProperty,
+		},
+		tooltip: {
+			title: 'Tooltip',
+			component: TooltipProperty,
+		},
+		style: {
+			title: 'Style',
+			component: StyleProperty,
+		},
+		shadow: {
+			title: 'Shadow',
+			component: ShadowProperty,
+		},
+		animation: {
+			title: 'Animation',
+			component: AnimationProperty,
+		},
+		trigger: {
+			title: 'Trigger',
+			component: TriggerProperty,
+		},
+		userProperty: {
+			title: 'User Property',
+			component: UserProperty,
+		},
+	},
 	polygon: {
 		general: {
 			title: 'General',
@@ -429,6 +463,16 @@ export default {
 		},
 	},
 	chart: {
+		general: {
+			title: 'General',
+			component: GeneralProperty,
+		},
+		chartOption: {
+			title: 'Chart Option',
+			component: ChartProperty,
+		},
+	},
+	pieChart: {
 		general: {
 			title: 'General',
 			component: GeneralProperty,

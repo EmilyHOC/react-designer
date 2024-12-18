@@ -151,6 +151,19 @@
 			}
 		},
 		{
+			"name": "Polyline",
+			"description": "",
+			"type": "drawing",
+			"icon": {
+				"prefix": "fas",
+				"name": "minus-square"
+			},
+			"option": {
+				"type": "polyline",
+				"name": "New polyline"
+			}
+		},
+		{
 			"name": "Line",
 			"description": "",
 			"type": "drawing",
@@ -192,6 +205,22 @@
 				"name": "New chart",
 				"width": 356,
 				"height": 356
+			}
+		},
+		{
+			"name": "pieChart",
+			"description": "",
+			"type": "element",
+			"icon": {
+				"prefix": "fas",
+				"name": "chart-pie"
+			},
+			"option": {
+				"superType": "element",
+				"type": "pieChart",
+				"name": "New chart2",
+				"width": 300,
+				"height": 300
 			}
 		},
 		{

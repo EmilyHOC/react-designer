@@ -431,6 +431,7 @@ class Handler implements HandlerOptions {
 		if (activeObject.type === 'svg' && (key === 'fill' || key === 'stroke')) {
 			(activeObject as FabricGroup)._objects.forEach(obj => obj.set(key, value));
 		}
+		console.log(key,value,'keyvalue',activeObject)
 		activeObject.set(key, value);
 		activeObject.setCoords();
 		this.canvas.requestRenderAll();
@@ -806,6 +807,7 @@ class Handler implements HandlerOptions {
 			},
 			option,
 		);
+		console.log(obj.type,'obj.type')
 		// Individually create canvas object
 		if (obj.superType === 'link') {
 			return this.linkHandler.create(newOption, loaded);
